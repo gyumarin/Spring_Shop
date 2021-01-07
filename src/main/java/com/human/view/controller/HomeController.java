@@ -27,6 +27,7 @@ public class HomeController {
 
 	/**
 	 * Simply selects the home view to render by returning its name.
+	 * afasf
 	 */
 
 	// 상품 목록 조회
