@@ -40,6 +40,8 @@ public class HomeController {
 		String pagenum;
 		String keyword;
 		
+		System.out.println("test");
+		
 		if (request.getParameter("filter") == null) {
 			filterString = "new";
 		} else {
