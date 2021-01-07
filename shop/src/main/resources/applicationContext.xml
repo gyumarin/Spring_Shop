@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<context:component-scan base-package="com.human.biz"></context:component-scan>
+
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+	<mvc:annotation-driven></mvc:annotation-driven>
+
+	<context:property-placeholder 
+		location="classpath:config/db.properties" />
+								   
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
+		<property name="url" value="jdbc:log4jdbc:mysql://localhost:3306/shop_db?useUnicode=true&amp;characterEncoding=utf8"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="1234"></property>
+	</bean>
+
+	<!-- SqlSessionFactoryBean 설정 -->
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:sql-map-config.xml" />
+	</bean>
+
+
+	<bean class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSession"></constructor-arg>
+	</bean>
+
+</beans>
