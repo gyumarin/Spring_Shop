@@ -1,19 +1,20 @@
-package com.human.biz.cart.impl;
+package com.buman.biz.user.impl;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.human.biz.cart.CartVO;
+import com.human.biz.user.UserVO;
+
 
 @Repository
-public class CartDAO {
+public class UserDAO {
 
 	@Autowired
 	private SqlSessionTemplate mybatis;
-	
-	public void addToCart(CartVO vo) {
-		mybatis.insert("cartDAO.addToCart", vo);
-	}
 
+	public UserVO loginUser(UserVO vo) {
+		// TODO Auto-generated method stub
+		return mybatis.selectOne("userDAO.loginUser", vo);
+	}
 }

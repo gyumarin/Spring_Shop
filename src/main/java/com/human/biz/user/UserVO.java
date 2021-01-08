@@ -2,41 +2,43 @@ package com.human.biz.user;
 
 public class UserVO {
 	
-	private String id;              //사용자 ID
-    private String name;            //사용자 이름
-    private String password;        //사용자 비밀번호
-    private String address;         //사용자 주소
-    private int role;               //사용자 권한
+	private String user_id;              //사용자 ID
+    private String user_name;            //사용자 이름
+    private String user_password;        //사용자 비밀번호
+    private String user_address;         //사용자 주소
+    private int user_role;               //사용자 권한
     
-    public String getId() {
-		return id;
+	public String getUser_id() {
+		return user_id;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
-	public String getName() {
-		return name;
+	public String getUser_name() {
+		return user_name;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
-	public String getPassword() {
-		return password;
+	public String getUser_password() {
+		return user_password;
 	}
-	public void setPassword(String password) {
-		this.password = password;
+	public void setUser_password(String user_password) {
+		this.user_password = user_password;
 	}
-	public String getAddress() {
-		return address;
+	public String getUser_address() {
+		return user_address;
 	}
-	public void setAddress(String address) {
-		this.address = address;
+	public void setUser_address(String user_address) {
+		this.user_address = user_address;
 	}
-	public int getRole() {
-		return role;
+	public int getUser_role() {
+		return user_role;
 	}
-	public void setRole(int role) {
-		this.role = role;
+	public void setUser_role(int user_role) {
+		this.user_role = user_role;
 	}
+    
+    
 
 }

@@ -6,11 +6,9 @@
 <mapper namespace="cartDAO">
 	
 	<insert id="addToCart">
-		INSERT INTO (product_id, user_id, cart_quantity, )
-		VALUES(#{cart_id}, #{product_id}, #{cart_quantity})
+		INSERT INTO cart (product_id, user_id, cart_quantity )
+		VALUES(#{product_id}, #{user_id}, #{cart_quantity})
 	</insert>
 	
-  	
-
 
 </mapper>

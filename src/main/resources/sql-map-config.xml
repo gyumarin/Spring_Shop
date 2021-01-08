@@ -5,11 +5,14 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.human.biz.product.ProductVO" alias="product"></typeAlias>
+		<typeAlias type="com.human.biz.cart.CartVO" alias="cart"></typeAlias>
+		<typeAlias type="com.human.biz.user.UserVO" alias="user"></typeAlias>
 	</typeAliases>
 	
 	<!-- SQL 명령어들이 저장된 SQL 파일 등록 -->
 	<mappers>
 		<mapper resource="mappings/product-mapping.xml"/>
 		<mapper resource="mappings/cart-mapping.xml"/>
+		<mapper resource="mappings/user-mapping.xml"/>
 	</mappers>
 </configuration>
