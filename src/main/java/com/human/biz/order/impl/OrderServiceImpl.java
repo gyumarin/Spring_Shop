@@ -57,11 +57,11 @@ public class OrderServiceImpl implements OrderService{
 				return P_quan - C_quan;
 			}else {
 				insertOrderDetail(orderId, cartVO.getCart_quantity(), cartVO.getProduct_id());
+				//카트 상태 수정
+				cartService.updateCart(cartVO);
 			}
 			
 			
-			//카트 상태 수정
-			cartService.updateCart(cartVO);
 		}
 		
 		return orderId;

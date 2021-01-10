@@ -31,5 +31,12 @@
 		   SET cart_process= 1
 	     WHERE cart_id = #{cart_id}
 	</update>
+	
+	<select id="cartList" resultType="cart">
+		select cart_id, user_id, cart.product_id, cart_quantity, cart_process, product_name, product_price, product_img from cart
+		left join product
+		ON cart.product_id = product.product_id
+		Where user_id = #{user_id}
+	</select>
 
 </mapper>

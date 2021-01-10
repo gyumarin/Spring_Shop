@@ -172,7 +172,7 @@ public class MyPageController {
 		if (loginUser == null) {
 			return "login";
 		} else {
-			
+			List<CartVO> cartList = cartService.cartList(loginUser.getUser_id());
 			
 			return "mypage";
 		}

@@ -1,5 +1,7 @@
 package com.human.biz.cart.impl;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -33,6 +35,11 @@ public class CartDAO {
 	public void updateCart(CartVO vo) {
 		mybatis.update("cartDAO.updateCart", vo);
 		
+	}
+
+	public List<CartVO> cartList(String user_id) {
+		// TODO Auto-generated method stub
+		return mybatis.selectList("cartDAO.cartList", user_id);
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.human.biz.cart;
 
+import java.util.List;
 
 public interface CartService {
 
@@ -12,5 +13,7 @@ public interface CartService {
 	void deleteCart(CartVO vo);
 	
 	void updateCart(CartVO vo);
+
+	List<CartVO> cartList(String user_id);
 
 }
