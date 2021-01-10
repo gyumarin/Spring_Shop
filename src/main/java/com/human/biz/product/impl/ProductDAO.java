@@ -48,6 +48,14 @@ public class ProductDAO {
 		return mybatis.selectOne("productDAO.getProduct", productId);
 	}
 
+	public void reduceQuantity(int productId, int minusQuantity) {
+		// TODO Auto-generated method stub
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("productId", productId);
+		map.put("minusQuantity", minusQuantity);
+		mybatis.update("productDAO.reduceQuantity", map);
+	}
+
 	
 
 	

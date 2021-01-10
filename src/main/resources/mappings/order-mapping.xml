@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="orderDAO">
+	<insert id="insertOrder">
+		INSERT INTO orders (user_id)
+		VALUES(#{user_id})
+	</insert>
+	
+	<select id="getOrderId" resultType="int">
+		select max(order_id) from orders
+	</select>
+	
+	<insert id="insertOrderDetail" parameterType="HashMap">
+		INSERT INTO order_detail (order_id, ot_quantity, product_id)
+		VALUES(#{order_id},#{quantity},#{product_id})
+	</insert>
+	
+	<select id="getOrderDetailList" resultType="orderDetail">
+		select odetail_id, order_id, ot_process, ot_quantity, order_detail.product_id, product_name, product_img, product_price from order_detail
+		left join product
+		ON order_detail.product_id = product.product_id
+		where order_id = #{order_id}
+	</select>
+	
+	<select id="getOrderDetailListProcess" resultType="orderDetail">
+		select odetail_id, order_id, ot_process, ot_quantity, order_detail.product_id, product_name, product_img, product_price from order_detail
+		left join product
+		ON order_detail.product_id = product.product_id
+		where order_id = #{order_id} and ot_process != 0
+	</select>
+	
+	<select id="getOrderTime" resultType="Date">
+		select order_time from orders
+		where order_id = #{order_id}
+	</select>
+	
+	<update id ="orderSuccess">
+		UPDATE order_Detail
+		   SET ot_process = 1
+	     WHERE order_id = #{order_id}
+	</update>
+	
+	<delete id ="orderCancel">
+		DELETE FROM orders
+		WHERE order_id= #{order_id}
+	</delete>
+	
+	<select id="getOrderListId" resultType="order">
+		select * from orders
+		where user_id = #{user_id}
+	</select>
+	
+	<select id="getOrder" resultType="order">
+		select * from orders
+		where order_id = #{order_id}
+	</select>
+
+</mapper>
+
+

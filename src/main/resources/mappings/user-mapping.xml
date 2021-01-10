@@ -9,6 +9,15 @@
 		select * from user where user_id = #{user_id} and user_password = #{user_password}
 	</select>
 	
+	<insert id="joinUser">
+		INSERT INTO user (user_id, user_name, user_password, user_address)
+		VALUES(#{user_id}, #{user_name}, #{user_password}, #{user_address})
+	</insert>
+	
+	<select id="idCheck" resultType="int">
+		SELECT COUNT(*) FROM user
+		WHERE user_id = #{user_id}
+	</select>
 
 
 

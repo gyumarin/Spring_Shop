@@ -30,6 +30,12 @@
 		where product_id = #{productId}
   	</select>
   	
+  	<update id="reduceQuantity" parameterType="HashMap">
+  		UPDATE product
+		SET product_quantity = product_quantity - #{minusQuantity}
+		WHERE product_id = #{productId}
+  	</update>
+  	
 
 
 </mapper>

@@ -14,6 +14,8 @@ public interface ProductService {
 	List<ProductVO> getCategoryList(Filter filter, Paging paging, int cate_num);
 
 	ProductVO getProduct(int productId);
+	
+	void reduceQuantity(int productId, int minusQuantity);
 
 	
 	

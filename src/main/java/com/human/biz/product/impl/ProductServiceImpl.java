@@ -39,6 +39,12 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.getProduct(productId);
 	}
 
+	@Override
+	public void reduceQuantity(int productId, int minusQuantity) {
+		productDAO.reduceQuantity(productId, minusQuantity);
+		
+	}
+
 	
 
 

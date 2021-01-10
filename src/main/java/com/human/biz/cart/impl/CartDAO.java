@@ -16,4 +16,23 @@ public class CartDAO {
 		mybatis.insert("cartDAO.addToCart", vo);
 	}
 
+	public CartVO ifAlreadyCart(CartVO vo) {
+		// TODO Auto-generated method stub
+		return mybatis.selectOne("cartDAO.ifAlreadyCart", vo);
+	}
+
+	public void addToQuantity(CartVO vo) {
+		mybatis.update("cartDAO.addToQuantity", vo);
+		
+	}
+
+	public void deleteCart(CartVO vo) {
+		mybatis.delete("cartDAO.deleteCart", vo);
+	}
+
+	public void updateCart(CartVO vo) {
+		mybatis.update("cartDAO.updateCart", vo);
+		
+	}
+
 }

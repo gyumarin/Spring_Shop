@@ -18,4 +18,31 @@ public class CartServiceImpl implements CartService{
 		
 	}
 
+	@Override
+	public CartVO ifAlreadyCart(CartVO vo) {
+		
+		return cartDAO.ifAlreadyCart(vo);
+	}
+
+	@Override
+	public void addToQuantity(CartVO vo) {
+		
+		cartDAO.addToQuantity(vo);
+		
+	}
+
+	@Override
+	public void deleteCart(CartVO vo) {
+		
+		cartDAO.deleteCart(vo);
+		
+	}
+
+	@Override
+	public void updateCart(CartVO vo) {
+
+		cartDAO.updateCart(vo);
+		
+	}
+
 }

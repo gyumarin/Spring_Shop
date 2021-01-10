@@ -1,4 +1,4 @@
-package com.buman.biz.user.impl;
+package com.human.biz.user.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +16,19 @@ public class UserServiceImpl implements UserService{
 	public UserVO loginUser(UserVO vo) {
 		// TODO Auto-generated method stub
 		return userDAO.loginUser(vo);
+	}
+
+	@Override
+	public void joinUser(UserVO vo) {
+		// TODO Auto-generated method stub
+		userDAO.joinUser(vo);
+		
+	}
+
+	@Override
+	public int idCheck(UserVO vo) {
+		// TODO Auto-generated method stub
+		return userDAO.idCheck(vo);
 	}
 
 }

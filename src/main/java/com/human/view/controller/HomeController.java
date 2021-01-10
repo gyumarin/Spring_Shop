@@ -31,7 +31,7 @@ public class HomeController {
 	 */
 
 	// 상품 목록 조회
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(HttpServletRequest request, Model model) {
 
 		//페이지 수, 필터링, 검색으로 상품 조회
@@ -67,6 +67,39 @@ public class HomeController {
 		
 		model.addAttribute("totalPage", paging.getTotalPage());
 		model.addAttribute("productList", productList);
+		
+		return "index";
+	}
+	
+	//카테고리별 상품 목록 조회
+	@RequestMapping(value = "/category", method = RequestMethod.GET)
+	public String CategoryList(HttpServletRequest request, Model model){
+	
+		int totalProduct = productService.getTotalProduct();
+		
+		String filterString;
+		String pagenum;
+		int cate_num  = Integer.parseInt(request.getParameter("cate_num"));
+		
+		if (request.getParameter("filter") == null) {
+			filterString = "new";
+		} else {
+			filterString = request.getParameter("filter");
+		}
+		if (request.getParameter("pagenum") == null) {
+			pagenum = "1";
+		} else {
+			pagenum = request.getParameter("pagenum");
+		}
+		
+		Filter filter = new Filter(filterString);
+		Paging paging = new Paging(pagenum, totalProduct);
+		
+		List<ProductVO> productList = productService.getCategoryList(filter, paging, cate_num);
+		
+		model.addAttribute("totalPage", paging.getTotalPage());
+		model.addAttribute("productList", productList);
+		
 		
 		return "index";
 	}

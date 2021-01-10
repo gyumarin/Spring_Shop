@@ -1,6 +1,6 @@
 package com.human.biz.product;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class ProductVO {
 	private int product_id;             // ªÛ«∞ id primary key, automatic

@@ -1,4 +1,4 @@
-package com.buman.biz.user.impl;
+package com.human.biz.user.impl;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +16,17 @@ public class UserDAO {
 	public UserVO loginUser(UserVO vo) {
 		// TODO Auto-generated method stub
 		return mybatis.selectOne("userDAO.loginUser", vo);
+	}
+
+
+	public void joinUser(UserVO vo) {
+		// TODO Auto-generated method stub
+		mybatis.insert("userDAO.joinUser", vo);
+	}
+
+
+	public int idCheck(UserVO vo) {
+		// TODO Auto-generated method stub
+		return mybatis.selectOne("userDAO.idCheck", vo);
 	}
 }
