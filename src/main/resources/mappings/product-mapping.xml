@@ -36,6 +36,22 @@
 		WHERE product_id = #{productId}
   	</update>
   	
+  	<update id="productUpdate">
+  		UPDATE product
+		SET product_name = #{product_name},
+			product_price = #{product_price},
+			product_desc = #{product_desc},
+			product_img = #{product_img},
+			product_category = #{product_category},
+			product_quantity = #{product_quantity}
+		WHERE product_id = #{product_id}
+  	</update>
+  	
+  	<insert id="productInsert">
+  		INSERT INTO product(product_name, product_price, product_desc, product_img, product_category, product_quantity)
+		VALUES (#{product_name}, #{product_price}, #{product_desc}, #{product_img}, #{product_category}, #{product_quantity})
+  	</insert>
+  	
 
 
 </mapper>

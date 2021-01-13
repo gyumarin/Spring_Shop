@@ -8,4 +8,5 @@ public interface UserService {
 
 	int idCheck(UserVO vo);
 
+
 }

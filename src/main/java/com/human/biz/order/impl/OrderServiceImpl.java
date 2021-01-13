@@ -73,13 +73,8 @@ public class OrderServiceImpl implements OrderService{
 		
 	}
 
-	@Override
-	public OrderVO getOrderList(OrderVO vo) {
-		
-		vo.setOrderDetailList(getOrderDetailList(vo.getOrder_id()));
-		
-		return vo;
-	}
+	
+	
 
 	private List<OrderDetailVO> getOrderDetailList(int order_id) {
 		
@@ -106,11 +101,25 @@ public class OrderServiceImpl implements OrderService{
 		return orderDAO.getOrderListId(user_id);
 	}
 
+	
+	
+	public List<OrderVO> getOrderList() {
+		
+		return orderDAO.getOrderList();
+	}
+	
 	@Override
-	public List<OrderVO> orderListView(String user_id) {
+	public OrderVO getOrder(OrderVO vo) {
 		
-		List<OrderVO> orderList = getOrderListId(user_id);
+		vo.setOrderDetailList(getOrderDetailList(vo.getOrder_id()));
 		
+		return vo;
+	}
+
+	
+	@Override
+	public List<OrderVO> orderListView(List<OrderVO> orderList) {
+	
 		Iterator<OrderVO> orderListIterator = orderList.iterator();
 		while(orderListIterator.hasNext()) {     
 		    OrderVO orderVO = orderListIterator.next();
@@ -149,6 +158,19 @@ public class OrderServiceImpl implements OrderService{
 		
 		orderDAO.orderSuccess(order_id);
 	}
+
+	@Override
+	public void orderProcessUpdate(List<OrderDetailVO> OrderDetailList) {
+		
+		for(OrderDetailVO vo : OrderDetailList){
+			
+			orderDAO.orderProcessUpdate(vo);
+		}
+		
+	}
+
+
+	
 	
 
 

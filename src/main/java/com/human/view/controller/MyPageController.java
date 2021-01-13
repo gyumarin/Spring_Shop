@@ -65,8 +65,6 @@ public class MyPageController {
 	
 	}
 	
-	
-	
 	@RequestMapping(value = "/order", method = RequestMethod.POST)
 	public String CreateOrderProcess(@ModelAttribute OrderVO vo, HttpServletRequest request, Model model){
 		UserVO loginUser = (UserVO)request.getSession().getAttribute("loginUser");
@@ -82,11 +80,12 @@ public class MyPageController {
 				// 주문 하신 상품 보다 재고가 더 적습니다.
 				// -1 * orderId 개를 초과되었기 때문에 수량을 조정한 후 다시 시도해주세요.
 				return "/index";
+			}else {
+				model.addAttribute("orderId", orderId);		
+				return "redirect:orderList";
 			}
 			
-			model.addAttribute("orderId", orderId);		
 			
-			return "redirect:order_list";
 		}
 		
 	}
@@ -103,7 +102,7 @@ public class MyPageController {
 			vo.setUser_id(loginUser.getUser_id());
 			vo.setOrder_address(loginUser.getUser_address());
 			vo.setOrder_time(orderService.getOrderTime(orderId));
-			vo = orderService.getOrderList(vo);
+			vo = orderService.getOrder(vo);
 			
 			List<OrderDetailVO> orderDetailList = vo.getOrderDetailList();
 			
@@ -154,8 +153,8 @@ public class MyPageController {
 		if (loginUser == null) {
 			return "login";
 		} else {
-			//List<OrderVO> orderList = orderService.getOrderListId(loginUser.getUser_id());
-			List<OrderVO> orderList = orderService.orderListView(loginUser.getUser_id());
+			List<OrderVO> orderList = orderService.getOrderListId(loginUser.getUser_id());
+			orderList = orderService.orderListView(orderList);
 			
 			model.addAttribute("orderList",orderList);
 			
@@ -174,6 +173,7 @@ public class MyPageController {
 		} else {
 			List<CartVO> cartList = cartService.cartList(loginUser.getUser_id());
 			
+			model.addAttribute("cartList",cartList);
 			return "mypage";
 		}
 	

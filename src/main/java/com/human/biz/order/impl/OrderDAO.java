@@ -69,6 +69,16 @@ public class OrderDAO {
 		return mybatis.selectOne("orderDAO.getOrder", order_id);
 	}
 
+	public List<OrderVO> getOrderList() {
+		// TODO Auto-generated method stub
+		return mybatis.selectList("orderDAO.getOrderList");
+	}
+
+	public void orderProcessUpdate(OrderDetailVO vo) {
+		// TODO Auto-generated method stub
+		mybatis.update("orderDAO.orderProcessUpdate",vo);
+	}
+
 
 
 	

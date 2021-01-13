@@ -17,6 +17,10 @@ public interface ProductService {
 	
 	void reduceQuantity(int productId, int minusQuantity);
 
+	void productUpdate(ProductVO vo);
+
+	void productInsert(ProductVO vo);
+
 	
 	
 		

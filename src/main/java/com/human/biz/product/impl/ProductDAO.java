@@ -56,6 +56,18 @@ public class ProductDAO {
 		mybatis.update("productDAO.reduceQuantity", map);
 	}
 
+	public void productUpdate(ProductVO vo) {
+		// TODO Auto-generated method stub
+		mybatis.update("productDAO.productUpdate", vo);
+		
+	}
+
+	public void productInsert(ProductVO vo) {
+		// TODO Auto-generated method stub
+		mybatis.insert("productDAO.productInsert", vo);
+		
+	}
+
 	
 
 	

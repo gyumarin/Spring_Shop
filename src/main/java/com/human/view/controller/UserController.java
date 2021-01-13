@@ -23,17 +23,23 @@ public class UserController {
 	private UserService userService;
 	
 	//로그인 
+	@SuppressWarnings("unused")
 	@RequestMapping(value="/login", method = RequestMethod.POST)
 	public String login(@RequestBody UserVO vo, Model model) {
 		
 		UserVO loginUser = userService.loginUser(vo);
 		
-		if(loginUser != null) {
+		if(loginUser.getUser_role()==2) {
+			System.out.println("어드민 계정임");
+			model.addAttribute("loginUser", loginUser);
+			return "admin/productList";
+		}else if(loginUser != null) {
 			model.addAttribute("loginUser", loginUser);
 			return "redirect:/";
 		}else {
 			return "fail";
 		}
+		
 		
 	}
 	

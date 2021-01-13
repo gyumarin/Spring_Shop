@@ -43,6 +43,12 @@
 	     WHERE order_id = #{order_id}
 	</update>
 	
+	<update id ="orderProcessUpdate">
+		UPDATE order_Detail
+		   SET ot_process = 2
+	     WHERE order_id = #{order_id}
+	</update>
+	
 	<delete id ="orderCancel">
 		DELETE FROM orders
 		WHERE order_id= #{order_id}
@@ -51,6 +57,10 @@
 	<select id="getOrderListId" resultType="order">
 		select * from orders
 		where user_id = #{user_id}
+	</select>
+	
+	<select id="getOrderList" resultType="order">
+		select * from orders
 	</select>
 	
 	<select id="getOrder" resultType="order">

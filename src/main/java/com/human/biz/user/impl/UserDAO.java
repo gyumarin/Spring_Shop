@@ -29,4 +29,6 @@ public class UserDAO {
 		// TODO Auto-generated method stub
 		return mybatis.selectOne("userDAO.idCheck", vo);
 	}
+
+
 }
