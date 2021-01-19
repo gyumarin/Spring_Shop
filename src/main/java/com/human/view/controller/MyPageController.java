@@ -30,7 +30,9 @@ public class MyPageController {
 	private OrderService orderService;
 	
 	
-	
+	/*
+	 * Cart
+	 */
 	@RequestMapping(value = "/cart", method = RequestMethod.POST)
 	public String AddToCart(@RequestBody CartVO vo, HttpServletRequest request, Model model){
 		
