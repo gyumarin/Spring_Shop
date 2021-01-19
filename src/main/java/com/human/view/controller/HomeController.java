@@ -19,18 +19,18 @@ import com.human.biz.util.Paging;
 import com.human.view.controller.HomeController;
 
 @Controller
-@SessionAttributes("product")
 public class HomeController {
 
 	@Autowired
 	private ProductService productService;
 
-	/**
-	 * Simply selects the home view to render by returning its name.
+	/*상품 목록 조회
 	 * 
+	 *  filter 	: new(새상품) , low(낮은 가격순), high(높은 가격순) default 값 : "new"
+	 *  pagenum	: 페이지 넘버  									default 값 : 1
+	 *  keyword : 검색어 	 									default 값 : ""
+	 *  
 	 */
-
-	// 상품 목록 조회
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(HttpServletRequest request, Model model) {
 
@@ -61,8 +61,6 @@ public class HomeController {
 		Filter filter = new Filter(filterString);
 		Paging paging = new Paging(pagenum, totalProduct);
 		
-		
-		// 페이징
 		List<ProductVO> productList = productService.getListProduct(filter, paging, keyword);
 		
 		model.addAttribute("totalPage", paging.getTotalPage());
@@ -71,7 +69,16 @@ public class HomeController {
 		return "index";
 	}
 	
-	//카테고리별 상품 목록 조회
+	
+	/*
+	 * 카테고리별 상품 목록 조회
+	 *  
+	 *  filter 	: new(새상품) , low(낮은 가격순), high(높은 가격순) default 값 : "new"
+	 *  pagenum	: 페이지 넘버  									default 값 : 1
+	 *  catenum : 검색어 	 									default 값 : 1
+	 *  
+	 */
+	
 	@RequestMapping(value = "/category", method = RequestMethod.GET)
 	public String CategoryList(HttpServletRequest request, Model model){
 	
@@ -79,7 +86,7 @@ public class HomeController {
 		
 		String filterString;
 		String pagenum;
-		int cate_num  = Integer.parseInt(request.getParameter("cate_num"));
+		int catenum  = Integer.parseInt(request.getParameter("catenum"));
 		
 		if (request.getParameter("filter") == null) {
 			filterString = "new";
@@ -95,7 +102,7 @@ public class HomeController {
 		Filter filter = new Filter(filterString);
 		Paging paging = new Paging(pagenum, totalProduct);
 		
-		List<ProductVO> productList = productService.getCategoryList(filter, paging, cate_num);
+		List<ProductVO> productList = productService.getCategoryList(filter, paging, catenum);
 		
 		model.addAttribute("totalPage", paging.getTotalPage());
 		model.addAttribute("productList", productList);
