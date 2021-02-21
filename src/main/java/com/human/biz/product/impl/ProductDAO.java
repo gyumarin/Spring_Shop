@@ -20,8 +20,12 @@ public class ProductDAO {
 	private SqlSessionTemplate mybatis;
 
 	
-	public int getTotalProduct() {
-		return mybatis.selectOne("productDAO.getTotalProduct");
+	public int getTotalProduct(String keyword) {
+		return mybatis.selectOne("productDAO.getTotalProduct", keyword);
+	}
+
+	public int getTotalCategoryProduct(int category) {
+		return mybatis.selectOne("productDAO.getTotalCategoryProduct", category);
 	}
 
 	public List<ProductVO> getListProduct(Filter filter, Paging paging, String keyword) {

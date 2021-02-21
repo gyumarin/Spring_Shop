@@ -6,22 +6,31 @@
 <mapper namespace="productDAO">
 	<!-- parameterType="" resultType="" -->
 	<select id="getListProduct" parameterType="HashMap" resultType="product">   
-        select @ROWNUM:=@ROWNUM+1 as rnum, A.*
-		from (SELECT @ROWNUM:=0) B ,(SELECT * FROM product ORDER BY ${filter.quary_name} ${filter.order}) A
+		select *
+		FROM product
 		where product_name like concat('%', #{keyword}, '%')
+		ORDER BY ${filter.quary_name} ${filter.order}
 		limit #{paging.limit} offset #{paging.offset};
   	</select>
   	
   	<select id="getCategoryList" parameterType="HashMap" resultType="product">   
-        select @ROWNUM:=@ROWNUM+1 as rnum, A.*
-		from (SELECT @ROWNUM:=0) B ,(SELECT * FROM product ORDER BY ${filter.quary_name} ${filter.order}) A
+        select *
+		FROM product
 		where product_category = #{cate_num}
+		ORDER BY ${filter.quary_name} ${filter.order}
 		limit #{paging.limit} offset #{paging.offset};
   	</select>
   	
   	<select id="getTotalProduct" resultType="int">
   		SELECT COUNT(*)
 		FROM product
+		where product_name like concat('%', #{keyword}, '%')
+  	</select>
+  	
+  	<select id="getTotalCategoryProduct" resultType="int">
+  		SELECT COUNT(*)
+		FROM product
+		where product_category = #{category}
   	</select>
   	
   	<select id="getProduct" resultType="product">

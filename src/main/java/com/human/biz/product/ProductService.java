@@ -7,7 +7,9 @@ import com.human.biz.util.Paging;
 
 public interface ProductService {
 
-	int getTotalProduct();
+	int getTotalProduct(String keyword);
+	
+	int getTotalCategoryProduct(int category);
 
 	List<ProductVO> getListProduct(Filter filter, Paging paging, String keyword);
 

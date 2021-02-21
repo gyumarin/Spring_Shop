@@ -22,9 +22,15 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public int getTotalProduct() {
+	public int getTotalProduct(String keyword) {
 		// TODO Auto-generated method stub
-		return productDAO.getTotalProduct();
+		return productDAO.getTotalProduct(keyword);
+	}
+	
+	@Override
+	public int getTotalCategoryProduct(int category) {
+		// TODO Auto-generated method stub
+		return productDAO.getTotalCategoryProduct(category);
 	}
 
 	@Override

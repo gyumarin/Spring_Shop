@@ -7,34 +7,9 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>Shop</title>
 </head>
-<body>
-<c:choose>
-       <c:when test="${empty sessionScope.loginUser}">
-       	로그아웃 됨
-       </c:when>
-       <c:otherwise>
-       
-         ${sessionScope.loginUser.user_name}
-       
-       </c:otherwise>       
-       </c:choose>
-       
-       <c:choose>
-       <c:when test="${empty sessionScope.product}">
-       	로그아웃 됨
-       </c:when>
-       <c:otherwise>
-       
-         ${sessionScope.product.product_name}
-       
-       </c:otherwise>       
-       </c:choose>
-hello world!
-
-<input type="text" name="id">
-
-
-</body>
+<script>
+window.location.href='/biz/home';
+</script>
 </html>

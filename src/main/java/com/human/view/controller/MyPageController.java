@@ -30,8 +30,9 @@ public class MyPageController {
 	private OrderService orderService;
 	
 	
-	/*
-	 * Cart
+	/* 장바구니에 담기
+	 * 
+	 * CartVO에 cart_quantity(수량)만 담겨 있음 
 	 */
 	@RequestMapping(value = "/cart", method = RequestMethod.POST)
 	public String AddToCart(@RequestBody CartVO vo, HttpServletRequest request, Model model){
@@ -168,6 +169,21 @@ public class MyPageController {
 	@RequestMapping(value = "/cartListView", method = RequestMethod.GET)
 	public String CartListView(HttpServletRequest request, Model model){
 		
+		UserVO loginUser = (UserVO)request.getSession().getAttribute("loginUser");
+		
+		if (loginUser == null) {
+			return "login";
+		} else {
+			List<CartVO> cartList = cartService.cartList(loginUser.getUser_id());
+			
+			model.addAttribute("cartList",cartList);
+			return "mypage";
+		}
+	
+	}
+	
+	@RequestMapping(value = "/myPage", method = RequestMethod.GET)
+	public String myPage(HttpServletRequest request, Model model){
 		UserVO loginUser = (UserVO)request.getSession().getAttribute("loginUser");
 		
 		if (loginUser == null) {

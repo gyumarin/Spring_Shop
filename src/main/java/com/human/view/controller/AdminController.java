@@ -40,7 +40,7 @@ public class AdminController {
 		if (loginUser != null && loginUser.getUser_role()==2) {
 
 			// 페이지 수, 필터링, 검색으로 상품 조회
-			int totalProduct = productService.getTotalProduct();
+			int totalProduct = productService.getTotalProduct("");
 
 			String pagenum;
 			String keyword;
