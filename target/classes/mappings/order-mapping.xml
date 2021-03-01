@@ -56,7 +56,7 @@
 	
 	<select id="getOrderListId" resultType="order">
 		select * from orders
-		where user_id = #{user_id}
+		where user_id = #{user_id} and ot_process = 2
 	</select>
 	
 	<select id="getOrderList" resultType="order">

@@ -1,6 +1,9 @@
 package com.human.view.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.human.biz.cart.CartService;
 import com.human.biz.cart.CartVO;
@@ -34,19 +38,24 @@ public class MyPageController {
 	 * 
 	 * CartVO에 cart_quantity(수량)만 담겨 있음 
 	 */
-	@RequestMapping(value = "/cart", method = RequestMethod.POST)
-	public String AddToCart(@RequestBody CartVO vo, HttpServletRequest request, Model model){
+	@RequestMapping(value = "/cart", method = RequestMethod.GET)
+	public String AddToCart(HttpServletRequest request, Model model){
 		
+		CartVO vo = new CartVO();
 		UserVO loginUser = (UserVO)request.getSession().getAttribute("loginUser");
-		ProductVO productInfo = (ProductVO)request.getSession().getAttribute("product");
-		
+		/*
+		 * ProductVO productInfo =
+		 * (ProductVO)request.getSession().getAttribute("product");
+		 */		
 		//로그인 되어 있지 않다면?
 		if(loginUser==null) {
 			return "login";
 		}else {
-			vo.setProduct_id(productInfo.getProduct_id());
 			vo.setUser_id(loginUser.getUser_id());
+			vo.setProduct_id(Integer.parseInt(request.getParameter("productId")));
+			vo.setCart_quantity(Integer.parseInt(request.getParameter("productQuantity")));
 			CartVO cart = cartService.ifAlreadyCart(vo);
+			
 			//이미 같은 물품이 있다면?
 			if(cart!=null) {
 				vo.setCart_id(cart.getCart_id());
@@ -56,21 +65,31 @@ public class MyPageController {
 			}
 		}
 		
-		return "cart";
+
+		model.addAttribute("tab", "cart");	
+		return "redirect:myPage";
+		/* return "mypage"; */
 	}
 	
-	@RequestMapping(value = "cart/delete", method = RequestMethod.GET)
-	public String DeleteCart(@RequestBody CartVO vo, Model model){
-		
+	@RequestMapping(value = "cart/delete", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<Object, Object> DeleteCart(HttpServletRequest request, Model model){
+		Map<Object, Object> map = new HashMap<Object, Object>();
+
+		CartVO vo = new CartVO();
+
+		vo.setCart_id(Integer.parseInt(request.getParameter("cartId")));
 		cartService.deleteCart(vo);
 		
-		return "cart";
+		map.put("success", true);
+		
+		return map;
 	
 	}
 	
 	@RequestMapping(value = "/order", method = RequestMethod.POST)
-	public String CreateOrderProcess(@ModelAttribute OrderVO vo, HttpServletRequest request, Model model){
-		UserVO loginUser = (UserVO)request.getSession().getAttribute("loginUser");
+    public String CreateOrderProcess(@ModelAttribute OrderVO vo, HttpServletRequest request, Model model){
+		UserVO loginUser = (UserVO)request.getSession().getAttribute("loginUser");		 		
 		
 		if(loginUser==null) {
 			return "login";
@@ -78,6 +97,7 @@ public class MyPageController {
 			vo.setUser_id(loginUser.getUser_id());
 			vo.setOrder_address(loginUser.getUser_address());
 		
+			
 			int orderId = orderService.insertOrder(vo);
 			if(orderId < 0) {
 				// 주문 하신 상품 보다 재고가 더 적습니다.
@@ -93,7 +113,7 @@ public class MyPageController {
 		
 	}
 	
-	@RequestMapping(value = "/orderList", method = RequestMethod.POST)
+	@RequestMapping(value = "/orderList", method = RequestMethod.GET)
 	public String OrderList(@RequestParam(value = "orderId") int orderId, HttpServletRequest request, Model model){
 		UserVO loginUser = (UserVO)request.getSession().getAttribute("loginUser");
 		if (loginUser == null) {
@@ -124,13 +144,14 @@ public class MyPageController {
 	}
 	
 	@RequestMapping(value = "/orderSuccess", method = RequestMethod.GET)
-	public String SuccessOrder(@RequestParam(value = "orderId") int orderId, HttpServletRequest request){
+	public String SuccessOrder(@RequestParam(value = "orderId") int orderId, HttpServletRequest request, Model model){
 		UserVO loginUser = (UserVO)request.getSession().getAttribute("loginUser");
 		if (loginUser == null) {
 			return "login";
 		} else {
 			orderService.orderSuccess(orderId);
-			return "mypage";
+			model.addAttribute("tab", "order");	
+			return "redirect:myPage";
 		}
 		
 	}
@@ -143,7 +164,7 @@ public class MyPageController {
 			return "login";
 		} else {
 			orderService.orderCancel(orderId);
-			return "mypage";
+			return "redirect:myPage";
 		}
 	
 	}
@@ -191,7 +212,17 @@ public class MyPageController {
 		} else {
 			List<CartVO> cartList = cartService.cartList(loginUser.getUser_id());
 			
+			int initTotalPrice = 0;
+			for(CartVO cart : cartList) {
+				initTotalPrice = initTotalPrice + (cart.getCart_quantity() * cart.getProduct_price());
+			}
+			model.addAttribute("initTotalPrice", initTotalPrice);
 			model.addAttribute("cartList",cartList);
+			if(request.getParameter("tab")==null) {
+				model.addAttribute("tab", "cart");	
+			}else {
+				model.addAttribute("tab", request.getParameter("tab"));	
+			}
 			return "mypage";
 		}
 	

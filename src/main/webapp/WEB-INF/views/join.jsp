@@ -138,6 +138,7 @@ $(function(){
 					<input class="confirm_password" name="confirm_password" type="password" style="margin-bottom:15px; height:30px" required>
 					<div class="alert pass-success" id="pass-success">비밀번호가 일치합니다.</div> 
 					<div class="alert pass-danger" id="pass-danger">비밀번호가 일치하지 않습니다.</div>​
+					<input class="user_name" name="user_name" style="margin-bottom:15px; height:30px" required>
 					<input name="user_address" style="margin-bottom:15px; height:30px" required>
 					<input id="submit" value="회원가입" type ="submit">
 				</div>

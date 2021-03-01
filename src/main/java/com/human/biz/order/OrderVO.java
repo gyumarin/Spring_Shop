@@ -10,10 +10,12 @@ public class OrderVO {
 	private int order_id;
 	private String user_id;
 	private Date order_time;
+	private String formatted_order_time;
 	private String order_address;
 	private int totalAmount;
 	private List<CartVO> cartList;
 	private List<OrderDetailVO> orderDetailList;
+	
 	
 	public int getOrder_id() {
 		return order_id;
@@ -32,6 +34,12 @@ public class OrderVO {
 	}
 	public void setOrder_time(Date order_time) {
 		this.order_time = order_time;
+	}
+	public String getFormatted_order_time() {
+		return formatted_order_time;
+	}
+	public void setFormatted_order_time(String formatted_order_time) {
+		this.formatted_order_time = formatted_order_time;
 	}
 	public String getOrder_address() {
 		return order_address;

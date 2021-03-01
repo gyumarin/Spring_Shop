@@ -5,6 +5,14 @@
 <html>
 <title>PRODUCT_DETAIL</title>
 </head>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+	function cartOn(){
+		location.href='/biz/cart?productId='+${product.product_id}+'&productQuantity='+$('#product_quantity').val()
+	}
+
+</script>
+<body>
 <div align="center">
 	<!-- width of this page -->
 	<div style="width:1000px;">
@@ -25,8 +33,8 @@
 					</div>
 					<div style="flex-grow: 1;"></div>
 					<div style="width:100%; text-align: left; margin-left:30px; margin-bottom:20px">
-						수량<input type="number" value=1  min="1" max="${ product.product_quantity}">
-						<button>장바구니 담기</button>
+						수량<input type="number" id="product_quantity" value=1  min="1" max="${ product.product_quantity}">
+						<button onclick="cartOn()">장바구니 담기</button>
 					</div>
 				</div>
 			</div>
@@ -38,5 +46,5 @@
 		<!-- contents end -->
 	</div>
 </div>
-<body>
+</body>
 </html>

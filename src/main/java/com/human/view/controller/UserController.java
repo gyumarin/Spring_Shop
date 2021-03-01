@@ -45,9 +45,8 @@ public class UserController {
 		UserVO loginUser = userService.loginUser(vo);
 		
 		if(loginUser.getUser_role()==2) {
-			System.out.println("어드민 계정임");
 			model.addAttribute("loginUser", loginUser);
-			return "admin/productList";
+			return "redirect:/admin/productList";
 		}else if(loginUser != null) {
 			model.addAttribute("loginUser", loginUser);
 			return "redirect:/";
@@ -61,9 +60,8 @@ public class UserController {
 	//로그아웃
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logout(SessionStatus sessionStatus, HttpServletRequest request) {
-		
 		sessionStatus.setComplete();
-		
+
 		return "redirect:/";
 		
 	}
@@ -80,8 +78,12 @@ public class UserController {
 	@RequestMapping(value="/join", method = RequestMethod.POST)
 	public String joinForm(HttpServletRequest request, Model model) {
 		UserVO vo = new UserVO();
+		vo.setUser_id(request.getParameter("user_id"));
+		vo.setUser_password(request.getParameter("user_password"));
+		vo.setUser_address(request.getParameter("user_address"));
 		userService.joinUser(vo);
 		
+		//회원가입 완료후 완료되었습니다 라는 메세지 추가
 		return "login";
 		
 	}

@@ -2,6 +2,8 @@ package com.human.view.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -65,7 +67,7 @@ public class AdminController {
 			model.addAttribute("totalPage", paging.getTotalPage());
 			model.addAttribute("productList", productList);
 
-			return "admin/productList";
+			return "admin/product_list";
 
 		} else {
 			return "fail";
@@ -88,8 +90,8 @@ public class AdminController {
 	}
 	
 
-	@RequestMapping(value = "admin/product_insert")
-	public String ProductInsert(@RequestParam(value = "product_img") MultipartFile uploadFile, ProductVO vo,
+	@RequestMapping(value = "admin/productInsert")
+	public String ProductInsert(@RequestParam(value = "product_img_file") MultipartFile uploadFile, ProductVO vo,
 			HttpServletRequest request, Model model) {
 
 		UserVO loginUser = (UserVO) request.getSession().getAttribute("loginUser");
@@ -120,7 +122,7 @@ public class AdminController {
 			vo.setProduct_img(fileName); // Product에 이미지 저장
 			productService.productInsert(vo);
 
-			return "redirect:admin/productList";
+			return "redirect:productList";
 
 		} else {
 			return "fail";
@@ -129,16 +131,17 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "admin/productUpdate_form")
-	public String ProductUpdateForm(ProductVO vo, Model model, HttpServletRequest request) {
+	public String ProductUpdateForm(Model model, HttpServletRequest request) {
 		UserVO loginUser = (UserVO) request.getSession().getAttribute("loginUser");
 
+		System.out.println("productId => ");
+		System.out.println(request.getParameter("productId"));
 		if (loginUser != null && loginUser.getUser_role()==2) {
+			ProductVO productVO = productService.getProduct(Integer.parseInt(request.getParameter("productId")));
 
-			ProductVO productVO = productService.getProduct(vo.getProduct_id());
+			model.addAttribute("ProductVO", productVO);
 
-			model.addAttribute("productVO", productVO);
-
-			return "admin/productUpdate";
+			return "admin/product_update";
 
 		} else {
 			return "fail";
@@ -147,7 +150,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "admin/productUpdate")
-	public String ProductUpdate(@RequestParam(value = "product_img") MultipartFile uploadFile, ProductVO vo,
+	public String ProductUpdate(@RequestParam(value = "product_img_file") MultipartFile uploadFile, ProductVO vo,
 			HttpServletRequest request, Model model) {
 
 		UserVO loginUser = (UserVO) request.getSession().getAttribute("loginUser");
@@ -179,7 +182,7 @@ public class AdminController {
 
 			productService.productUpdate(vo);
 
-			return "redirect:admin/productList";
+			return "redirect:productList";
 
 		} else {
 			return "fail";
@@ -193,13 +196,19 @@ public class AdminController {
 		UserVO loginUser = (UserVO) request.getSession().getAttribute("loginUser");
 
 		if (loginUser != null && loginUser.getUser_role()==2) {
+			DateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+			
 			
 			List<OrderVO> orderList = orderService.getOrderList();
 			orderList = orderService.orderListView(orderList);
 			
+			for(OrderVO orderVo: orderList) {
+				orderVo.setFormatted_order_time(format.format(orderVo.getOrder_time()));
+			}
+			
 			model.addAttribute("orderList",orderList);
 			
-			return "admin/orderList";
+			return "admin/order_list";
 
 		} else {
 			return "fail";
@@ -216,7 +225,7 @@ public class AdminController {
 			
 			orderService.orderProcessUpdate(vo);
 			
-			return "admin/orderList";
+			return "admin/order_list";
 
 		} else {
 			return "fail";
